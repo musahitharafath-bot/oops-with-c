@@ -1,0 +1,116 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+protected:
+    string name, address;
+    long phone_no;
+
+public:
+    void getPersonDetails() {
+        cout << "Enter name: ";
+        cin.ignore();
+        getline(cin, name);
+
+        cout << "Enter address: ";
+        getline(cin, address);
+
+        cout << "Enter phone number: ";
+        cin >> phone_no;
+    }
+
+    void displayPersonDetails() {
+        cout << "Name: " << name << endl;
+        cout << "Address: " << address << endl;
+        cout << "Phone: " << phone_no << endl;
+    }
+};
+
+class Employee : public Person {
+    int eno;
+    string ename;
+
+public:
+    void input() {
+        cout << "\nEnter Employee Number: ";
+        cin >> eno;
+
+        cout << "Enter Employee Name: ";
+        cin.ignore();
+        getline(cin, ename);
+
+        getPersonDetails();
+    }
+
+    void display() {
+        cout << "\n--- Employee ---\n";
+        cout << "Employee No: " << eno << endl;
+        cout << "Employee Name: " << ename << endl;
+        displayPersonDetails();
+    }
+};
+
+class Manager : public Person {
+    string designation, department_name;
+    double basic_salary;
+
+public:
+    void input() {
+        cout << "\nEnter Designation: ";
+        cin.ignore();
+        getline(cin, designation);
+
+        cout << "Enter Department: ";
+        getline(cin, department_name);
+
+        cout << "Enter Basic Salary: ";
+        cin >> basic_salary;
+
+        getPersonDetails();
+    }
+
+    void display() {
+        cout << "\n--- Manager ---\n";
+        cout << "Designation: " << designation << endl;
+        cout << "Department: " << department_name << endl;
+        cout << "Basic Salary: " << basic_salary << endl;
+        displayPersonDetails();
+    }
+
+    double getSalary() {
+        return basic_salary;
+    }
+};
+
+int main() {
+    int n;
+
+    cout << "Enter number of employees: ";
+    cin >> n;
+
+    Employee employees[10];
+
+    for (int i = 0; i < n; i++) {
+        cout << "\nEmployee " << i + 1 << endl;
+        employees[i].input();
+    }
+
+    cout << "\nEnter number of managers: ";
+    cin >> n;
+
+    Manager managers[10];
+
+    for (int i = 0; i < n; i++) {
+        cout << "\nManager " << i + 1 << endl;
+        managers[i].input();
+    }
+
+    cout << "\n===== EMPLOYEES =====\n";
+    // Employee details can be displayed here.
+
+    for (int i = 0; i < n; i++)
+        managers[i].display();
+
+    return 0;
+}
