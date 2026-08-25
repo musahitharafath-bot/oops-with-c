@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class books {
+    string author, title, publisher;
+    double price;
+    int stock;
+
+    // Private function
+    void updatePrice() {
+        cout << "Enter updated price: ";
+        cin >> price;
+    }
+
+public:
+    static int successful;
+    static int unsuccessful;
+
+    books(string a, string t, double p, string pub, int s) {
+        author = a;
+        title = t;
+        price = p;
+        publisher = pub;
+        stock = s;
+    }
+
+    void searchBook(string a, string t, int copies) {
+        if (author == a && title == t) {
+            cout << "\nBook Available\n";
+            cout << "Title: " << title << endl;
+            cout << "Author: " << author << endl;
+            cout << "Publisher: " << publisher << endl;
+            cout << "Price: Rs. " << price << endl;
+            cout << "Stock: " << stock << endl;
+
+            if (copies <= stock) {
+                cout << "Total cost: Rs. " << price * copies << endl;
+                stock -= copies;
+                successful++;
+                cout << "Transaction successful.\n";
+            }
+            else {
+                cout << "Required copies not in stock.\n";
+                unsuccessful++;
+            }
+        }
+        else {
+            cout << "Book not available.\n";
+            unsuccessful++;
+        }
+    }
+
+    void changePrice() {
+        updatePrice();
+    }
+
+    static void statistics() {
+        cout << "\nSuccessful transactions: "
+             << successful << endl;
+        cout << "Unsuccessful transactions: "
+             << unsuccessful << endl;
+    }
+};
+
+int books::successful = 0;
+int books::unsuccessful = 0;
+
+int main() {
+    books b("R.K. Narayan", "Malgudi Days",
+            450, "Indian Publisher", 10);
+
+    string author, title;
+    int copies;
+
+    cout << "Enter author: ";
+    getline(cin, author);
+
+    cout << "Enter title: ";
+    getline(cin, title);
+
+    cout << "Enter required copies: ";
+    cin >> copies;
+
+    b.searchBook(author, title, copies);
+
+    books::statistics();
+
+    return 0;
+}
