@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Item {
+protected:
+    int item_no;
+    string name;
+    double price;
+
+public:
+    void inputItem() {
+        cout << "Enter item number: ";
+        cin >> item_no;
+
+        cout << "Enter item name: ";
+        cin.ignore();
+        getline(cin, name);
+
+        cout << "Enter price: ";
+        cin >> price;
+    }
+};
+
+class DiscountedItem : public Item {
+    double discount_percent;
+
+public:
+    void input() {
+        inputItem();
+
+        cout << "Enter discount percentage: ";
+        cin >> discount_percent;
+    }
+
+    double getFinalPrice() {
+        return price - (price * discount_percent / 100);
+    }
+
+    void display() {
+        cout << "\nItem No: " << item_no << endl;
+        cout << "Item Name: " << name << endl;
+        cout << "Original Price: Rs. " << price << endl;
+        cout << "Discount: " << discount_percent << "%" << endl;
+        cout << "Final Price: Rs. " << getFinalPrice() << endl;
+    }
+};
+
+int main() {
+    int n;
+
+    cout << "Enter number of items: ";
+    cin >> n;
+
+    DiscountedItem items[20];
+
+    double total = 0;
+
+    for (int i = 0; i < n; i++) {
+        cout << "\nEnter details of item " << i + 1 << endl;
+        items[i].input();
+    }
+
+    cout << "\n========== BILL ==========\n";
+
+    for (int i = 0; i < n; i++) {
+        items[i].display();
+        total += items[i].getFinalPrice();
+    }
+
+    cout << "\nTotal Amount = Rs. " << total << endl;
+
+    return 0;
+}
